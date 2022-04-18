@@ -1,0 +1,34 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    newuser: testuser1
+
+  pre_tasks:
+    - name: Install openssh
+      ansible.builtin.package:
+        name: 
+          - openssh
+        state: latest
+      when: ansible_os_family == 'RedHat' or ansible_os_family == 'Suse'
+      changed_when: false
+
+  tasks:
+    - name: Copy something to test use of synchronize module
+      ansible.builtin.copy:
+        src: /etc/hosts
+        dest: /tmp/hosts-from-controller
+
+    - name: "Include jherden.create_sshkey"
+      ansible.builtin.include_role:
+        name: "jherden.create_sshkey"
+
+    - name: Add the user "{{ newuser }}"
+      ansible.builtin.user:
+        name: "{{ newuser }}"
+
+    - name: create SSH key for "{{ newuser }}"
+      ansible.builtin.include_role:
+        name: create_sshkey
+      vars:
+        username: "{{ newuser }}"

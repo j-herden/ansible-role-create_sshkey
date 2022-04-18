@@ -1,0 +1,33 @@
+---
+# tasks file for create_sshkey
+
+- name: Include OS-specific variables.
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: adjust homedir if not root
+  ansible.builtin.set_fact:
+    userhome: "/home/{{ username }}"
+  when: username != 'root'
+
+# - name: Print userhome
+#   ansible.builtin.debug:
+#     var: username
+
+- name: ensure {{ userhome }}/.ssh directory exists
+  ansible.builtin.file:
+    path: "{{ userhome }}/.ssh"
+    state: directory
+    mode: "u=rwx,g=,o="
+    owner: "{{ username }}"
+    group: "{{ groupname }}"
+
+- name: ensure SSH key exists for {{ username }}
+  ansible.builtin.openssh_keypair:
+    path: "{{ userhome }}/.ssh/id_ed25519"
+    type: "{{ keytype }}"
+    size: "{{ keysize }}"
+    state: present
+    comment: "{{ username }}@{{ hostname }}"
+    owner: "{{ username }}"
+    group: "{{ groupname }}"
+    force: no
