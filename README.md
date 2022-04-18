@@ -35,4 +35,4 @@ MIT
 Author Information
 ------------------
 
-Jens Herden (jens@jherden.de)
+Jens Herden
