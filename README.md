@@ -1,5 +1,5 @@
-Role Name
-=========
+Ansible Role: create_sshkey
+===========================
 
 Create a ssh key for a user
 
