@@ -1,8 +1,8 @@
 ---
 # defaults file for create_sshkey
-username:  root
+username: root
 groupname: root
-userhome:  /root
-hostname:  "{{ ansible_hostname }}"
-keytype:   ed25519
-keysize:   4096
+userhome: /root
+hostname: "{{ ansible_hostname }}"
+keytype: ed25519
+keysize: 4096

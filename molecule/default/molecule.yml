@@ -3,7 +3,7 @@ dependency:
   name: galaxy
 
 driver:
-  name: podman
+  name: docker
 
 platforms:
   - name: opensuse-leap
@@ -15,9 +15,10 @@ platforms:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
-  - name: rhel8
+  - name: centos8
     # image: registry.access.redhat.com/ubi8/ubi-init
-    image: quay.io/centos/centos:stream8
+    # image: quay.io/centos/centos:stream8
+    image: docker.io/geerlingguy/docker-centos8-ansible
     tmpfs:
       - /run
       - /tmp
